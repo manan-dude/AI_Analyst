@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartupAI Analyst - AI-Powered Investment Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header__content">
+                    <div class="logo">
+                        <h1 class="logo__text">StartupAI Analyst</h1>
+                        <p class="logo__tagline">AI-Powered Investment Intelligence</p>
+                    </div>
+                    <nav class="nav">
+                        <button class="nav__btn nav__btn--active" data-section="dashboard">Dashboard</button>
+                        <button class="nav__btn" data-section="upload">Upload</button>
+                        <button class="nav__btn" data-section="analysis">Analysis</button>
+                        <button class="nav__btn" data-section="benchmarking">Benchmarking</button>
+                        <button class="nav__btn" data-section="risks">Risks</button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section section--active">
+            <div class="container">
+                <div class="dashboard">
+                    <div class="dashboard__header">
+                        <h2>Platform Overview</h2>
+                        <p class="text-secondary">AI-powered startup evaluation and investment insights</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card__icon">📊</div>
+                            <div class="stat-card__content">
+                                <h3>247</h3>
+                                <p>Startups Analyzed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__icon">💡</div>
+                            <div class="stat-card__content">
+                                <h3>89%</h3>
+                                <p>Accuracy Rate</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__icon">⚡</div>
+                            <div class="stat-card__content">
+                                <h3>< 3min</h3>
+                                <p>Avg Analysis Time</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__icon">🎯</div>
+                            <div class="stat-card__content">
+                                <h3>$2.4B</h3>
+                                <p>Portfolio Value</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard__grid">
+                        <div class="dashboard__card">
+                            <h3>Recent Analyses</h3>
+                            <div class="recent-list" id="recentAnalyses"></div>
+                            <button class="btn btn--primary btn--sm" onclick="showSection('upload')">Analyze New Startup</button>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload" class="section">
+            <div class="container">
+                <div class="upload">
+                    <div class="upload__header">
+                        <h2>Upload Startup Documents</h2>
+                        <p class="text-secondary">Upload pitch decks, transcripts, emails, and other materials for AI analysis</p>
+                    </div>
+                    
+                    <div class="upload__content">
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="upload-zone__icon">📄</div>
+                            <h3>Drop files here or click to browse</h3>
+                            <p>Supported formats: PDF, DOCX, TXT, PPTX</p>
+                            <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt,.pptx" class="upload-zone__input">
+                        </div>
+                        
+                        <div class="upload__files" id="uploadedFiles"></div>
+                        
+                        <div class="upload__form">
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="companyName" placeholder="Enter company name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Sector</label>
+                                <select class="form-control" id="companySector">
+                                    <option value="">Select sector</option>
+                                    <option value="AI/ML">AI/ML Infrastructure</option>
+                                    <option value="FinTech">FinTech/Security</option>
+                                    <option value="HealthTech">HealthTech</option>
+                                    <option value="CleanTech">CleanTech</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Stage</label>
+                                <select class="form-control" id="companyStage">
+                                    <option value="">Select stage</option>
+                                    <option value="Pre-Seed">Pre-Seed</option>
+                                    <option value="Seed">Seed</option>
+                                    <option value="Series A">Series A</option>
+                                    <option value="Series B">Series B</option>
+                                    <option value="Series C+">Series C+</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="upload__actions">
+                            <button class="btn btn--primary" id="analyzeBtn" disabled>Start AI Analysis</button>
+                            <button class="btn btn--secondary" onclick="loadSampleStartup()">Load Sample Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section id="analysis" class="section">
+            <div class="container">
+                <div class="analysis" id="analysisContent">
+                    <div class="analysis__header">
+                        <h2>AI Analysis Results</h2>
+                        <div class="startup-selector">
+                            <label class="form-label">Select Startup:</label>
+                            <select class="form-control" id="startupSelector" onchange="loadStartupAnalysis()">
+                                <option value="">Choose startup...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis__grid" id="analysisGrid">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benchmarking Section -->
+        <section id="benchmarking" class="section">
+            <div class="container">
+                <div class="benchmarking">
+                    <div class="benchmarking__header">
+                        <h2>Industry Benchmarking</h2>
+                        <p class="text-secondary">Compare startup performance against sector averages</p>
+                    </div>
+                    
+                    <div class="benchmarking__content">
+                        <div class="benchmark-card">
+                            <h3>Revenue Multiple Comparison</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="multipleChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="benchmark-card">
+                            <h3>Growth Rate vs Industry</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="growthChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="benchmark-card">
+                            <h3>Sector Performance Matrix</h3>
+                            <div class="chart-container" style="position: relative; height: 400px;">
+                                <canvas id="sectorChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Assessment Section -->
+        <section id="risks" class="section">
+            <div class="container">
+                <div class="risks">
+                    <div class="risks__header">
+                        <h2>Risk Assessment Matrix</h2>
+                        <p class="text-secondary">Comprehensive risk evaluation across key dimensions</p>
+                    </div>
+                    
+                    <div class="risk-matrix" id="riskMatrix">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="recommendation-panel" id="recommendationPanel">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Progress Modal -->
+        <div id="progressModal" class="modal hidden">
+            <div class="modal__backdrop"></div>
+            <div class="modal__content">
+                <div class="progress-container">
+                    <h3>Analyzing Startup...</h3>
+                    <div class="progress-steps" id="progressSteps"></div>
+                    <div class="progress-bar">
+                        <div class="progress-bar__fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Initializing analysis...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Modal -->
+        <div id="exportModal" class="modal hidden">
+            <div class="modal__backdrop" onclick="closeModal('exportModal')"></div>
+            <div class="modal__content">
+                <div class="modal__header">
+                    <h3>Export Deal Notes</h3>
+                    <button class="modal__close" onclick="closeModal('exportModal')">×</button>
+                </div>
+                <div class="modal__body">
+                    <div class="export-options">
+                        <div class="export-option">
+                            <button class="btn btn--primary" onclick="exportToPDF()">📄 Export as PDF</button>
+                        </div>
+                        <div class="export-option">
+                            <button class="btn btn--secondary" onclick="exportToJSON()">💾 Export as JSON</button>
+                        </div>
+                        <div class="export-option">
+                            <button class="btn btn--secondary" onclick="shareResults()">🔗 Share Results</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
